@@ -4,6 +4,7 @@ from line_parser import parse_estimate_line
 from suggestion_engine import get_suggestions
 from PyPDF2 import PdfReader
 import io
+import pdfplumber
 
 app = FastAPI()
 
@@ -29,9 +30,14 @@ async def upload_pdf(file: UploadFile = File(...)):
         return {"error": "Only PDF files are supported"}
 
     contents = await file.read()
-    reader = PdfReader(io.BytesIO(contents))
-    text = ""
-    for page in reader.pages:
-        text += page.extract_text() or ""
+    with open("temp.pdf", "wb") as f:
+        f.write(contents)
 
-    return {"extracted_text": text[:1000]}  # Preview first 1000 characters
+    text = ""
+    with pdfplumber.open("temp.pdf") as pdf:
+        for page in pdf.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
+
+    return {"extracted_text": text[:5000]}  # Increase preview limit
