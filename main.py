@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Body, UploadFile, File
 from fastapi.responses import HTMLResponse
-from line_parser import parse_estimate_line, parse_estimate_lines  # ✅ Add this
+from line_parser import parse_estimate_lines
 from suggestion_engine import get_suggestions
 from PyPDF2 import PdfReader
 import io
