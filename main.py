@@ -43,14 +43,6 @@ async def upload_pdf(file: UploadFile = File(...)):
     # Parse all estimate lines
     parsed_lines = parse_estimate_lines(text)
 
-    # Define static vehicle features (can be dynamic later)
-    vehicle_features = {
-        "parking_sensors": True,
-        "auto_park": True,
-        "headlamp_washers": False,
-        "fog_lamps": True
-    }
-
     # Run suggestions on each parsed line
     audit_flags = []
     for line in parsed_lines:
