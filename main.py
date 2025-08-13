@@ -46,7 +46,7 @@ async def upload_pdf(file: UploadFile = File(...)):
     # Run suggestions on each parsed line
     audit_flags = []
     for line in parsed_lines:
-        suggestions = get_suggestions(line, parsed_lines, vehicle_features)
+        suggestions = get_suggestions(line, parsed_lines)
         if suggestions:
             audit_flags.append({
                 "part": line.get("part"),
