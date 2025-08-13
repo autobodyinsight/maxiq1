@@ -55,6 +55,5 @@ async def upload_pdf(file: UploadFile = File(...)):
             })
 
     return {
-        "extracted_text": text[:5000],
         "audit_flags": audit_flags
     }
