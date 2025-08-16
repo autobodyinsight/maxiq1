@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Body, UploadFile, File
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware  # ✅ Add this line
 from line_parser import parse_estimate_lines
 from suggestion_engine import get_suggestions
 from PyPDF2 import PdfReader
@@ -7,6 +8,15 @@ import io
 import pdfplumber
 
 app = FastAPI()
+
+# ✅ Add this block immediately after app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://refactored-space-journey-g4w5j4gprpp7cwvqp-5173.app.github.dev"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/", response_class=HTMLResponse)
 def read_root():
